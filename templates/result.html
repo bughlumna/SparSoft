@@ -1,11 +1,52 @@
 <!-- templates/result.html -->
 <!DOCTYPE html>
 <html>
+
+<style>
+table, th, td {
+  border: 3px solid black;
+}
+</style>
+<script>
+    console.log("beta_complement ",beta_complement)
+</script>
+
 <head>
     <title>Result</title>
 </head>
 <body>
-    <p>Name: {{ name }}</p>
-    <p>Age: {{ age }}</p>
+    <p>Alpha: {{ alpha }}</p>
+    <p>1-Beta: {{ beta }}</p>
+    <p>Beta: {{beta_complement}}</p>
+    <p>Sigma Squre: {{ sigma_sqr }}</p>
+    <p>μ<sub>0</sub>: {{ mu_0 }}</p>
+    <p>μ<sub>1</sub>: {{ mu_1 }}</p>
+    <p>Side test type: {{ test_type }}</p>
+    <p></p>
+    <p>Result: {{ result }}</p>
+
+<table>
+    <tr>
+      <th>Alpha          </th>
+      <th>1-Beta         </th>
+      <th>Beta           </th>
+      <th>Sigma Squre    </th>
+      <th>μ<sub>0        </sub></th>
+      <th>μ<sub>1        </sub></th>
+      <th>Side test type </th>
+      <th>Sample Size    </th>
+    </tr>
+  <tr>
+      <td>{{ alpha }}    </td>
+      <td>{{ beta }}     </td>
+      <td>{{beta_complement}} </td>
+      <td>{{ sigma_sqr }}</td>
+      <td>{{ mu_0 }}     </td>
+      <td>{{ mu_1 }}     </td>
+      <td>{{ test_type }}</td>
+      <td>{{ result }}   </td>
+  </tr>
+
+</table>
 </body>
 </html>
