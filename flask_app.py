@@ -96,7 +96,7 @@ def login():
             print(error_message, file=sys.stderr)
             session['username'] = user.username
             flash('Logged in successfully!','success')
-            #return redirect(url_for('index'))
+
             return render_template('inputdata.html')
         else:
             flash('Invalid username or password.','error')
@@ -110,6 +110,8 @@ def logout():
 
 @app.route('/inputdata', methods=['POST'])
 def inputdata():
+    if 'username' in session:
+       return redirect(url_for('login'))
     flash('inputdata called')
     if request.method == 'POST':
         flash('POST  called')
