@@ -5,10 +5,17 @@ from dotenv import load_dotenv, dotenv_values
 import os
 import sys
 import math
+import numpy as np
+from scipy.stats import norm
 
 app = Flask(__name__)
+#load_dotenv()
+# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+# sec = app.config['SECRET_KEY']
+# str = f"sec={sec}"
+# print(str, file=sys.stderr)
 
-config = dotenv_values(".env")
+#config = dotenv_values(".env")
 #print ( config['SQLALCHEMY_DATABASE_URI'])
 #print (config['SQLALCHEMY_DATABASE_URI'])
 
@@ -66,7 +73,8 @@ class User(db.Model):
 @app.route('/')
 def index():
     if 'username' in session:
-        return render_template('index.html', username=session['username'])
+#        return render_template('index.html', username=session['username'])
+         return render_template('inputdata.html', username=session['username'])
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -124,9 +132,9 @@ def logout():
 def inputdata():
     # 'username' in session:
      #  return redirect(url_for('login'))
-    flash('inputdata called')
+    #flash('inputdata called')
     if request.method == 'POST':
-        flash('POST  called')
+        #flash('POST  called')
         alpha = request.form['alpha']
         beta = request.form['beta']
         sigma_sqr = request.form['sigma_sqr']
@@ -404,4 +412,5 @@ if __name__ == '__main__':
     # Create tables if they don't exist
     with app.app_context():
         db.create_all()
+    print(str, file=sys.stderr)
     app.run(debug=True) # debug=True for development, set to False for production
