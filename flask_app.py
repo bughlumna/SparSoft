@@ -143,7 +143,7 @@ def inputdata():
     return render_template('result.html')
 
 def calculate(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int,test_type:int):
-    print(f"inside calculate", file=sys.stder)
+    print(f"inside calculate", file=sys.stderr)
     if test_type == 1:
         n = calc_test_one_sided(float(alpha),float(beta),int(sigma_sqr),
         int(mu_0),int(mu_1))
@@ -347,6 +347,57 @@ def calc_test_two_sided(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int) 
 def isEmpty(input:str):
     return len(input.strip()) == 0
 
+def calculate_critical_values(levels: list[float], half_level: bool = False) -> list[float]:
+    """
+    Calculates critical values from a list of significance levels using the inverse
+    cumulative distribution function (quantile function) of the standard normal distribution.
+
+    This function is equivalent to R's qnorm(level, lower.tail=F) or qnorm(level/2, lower.tail=F).
+
+    Args:
+        levels (list[float]): A list of significance levels (alpha values), e.g., [0.01, 0.05, ...].
+                              These values represent the probability in the upper tail.
+        half_level (bool, optional): If True, each level will be divided by 2 before
+                                     calculating the critical value. This is typically
+                                     used for two-tailed tests where the alpha level
+                                     is split equally between the two tails.
+                                     Defaults to False (for a one-tailed test).
+
+    Returns:
+        list[float]: A list of calculated critical values. Each value corresponds to
+                     the point on the standard normal distribution curve beyond which
+                     the specified (or halved) probability lies in the upper tail.
+    """
+    critical_values = []
+    for level_val in levels:
+        # If half_level is True, we divide the significance level by 2.
+        # Otherwise, we use the level as is.
+        effective_level = level_val / 2 if half_level else level_val
+
+        # In R's qnorm(prob, lower.tail=F), 'prob' is the probability in the upper tail.
+        # scipy.stats.norm.ppf(q) expects 'q' as the cumulative probability (P(X <= x)).
+        # So, if 'effective_level' is the upper tail probability, the cumulative
+        # probability 'q' is 1 - effective_level.
+        cumulative_probability = 1 - effective_level
+
+        critical_values.append(norm.ppf(cumulative_probability))
+
+    return critical_values
+
+# Define the list of significance levels
+# levels_data = [0.01, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
+
+# print("--- Calculating Critical Values (One-Tailed, equivalent to R's qnorm(Level[i], lower.tail=F)) ---")
+#  Call the function for a one-tailed test (half_level=False)
+# critical_one_tail = calculate_critical_values(levels_data, half_level=False)
+# for i, level in enumerate(levels_data):
+#     print(f"Level: {level:.2f}, Critical Value: {critical_one_tail[i]:.4f}")
+
+# print("\n--- Calculating Critical Values (Two-Tailed, equivalent to R's qnorm((Level/2)[i], lower.tail=F)) ---")
+#  Call the function for a two-tailed test (half_level=True)
+# critical_two_tail = calculate_critical_values(levels_data, half_level=True)
+# for i, level in enumerate(levels_data):
+#     print(f"Level: {level:.2f}, Critical Value: {critical_two_tail[i]:.4f}")
 
 # --- Run the app ---
 if __name__ == '__main__':
