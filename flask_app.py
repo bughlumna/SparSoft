@@ -157,212 +157,7 @@ def inputdata():
         return calculate(float(alpha),float(beta),int(sigma_sqr),int(mu_0),int(mu_1), int(test_type))
     return render_template('result.html')
 
-def calculate(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int,test_type:int):
-    print(f"inside calculate", file=sys.stderr)
-    if test_type == 1:
-        n = calc_test_one_sided(float(alpha),float(beta),int(sigma_sqr),
-        int(mu_0),int(mu_1))
-    elif test_type == 2:
-        n = calc_test_two_sided(float(alpha),float(beta),int(sigma_sqr),
-        int(mu_0),int(mu_1))
-    return render_template('result.html', alpha=alpha, beta=beta,
-      sigma_sqr=sigma_sqr,mu_0=mu_0,mu_1=mu_1,test_type=test_type,result=n, beta_complement=beta_complement_g)
-
-def calc_test_one_sided(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int) -> int:
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        beta_complement_g = beta_complement
-        print(f"beta_complement_g  '{beta_complement_g}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_one_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-        return 0
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"divisor '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_one_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-        return 0
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"divisor '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_one_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-        return 0
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"dividen '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-def calc_test_two_sided(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int) -> int:
-
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_two_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_two_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-        return 0
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"dividen '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_one_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"dividen '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-
-    try:
-        key = str(alpha);
-        print(f"Key '{alpha}'  key '{key}'")
-        zeta_alpha = zeta_map_for_one_sided_alpha[key]
-        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
-    except KeyError as ke1:
-        print(f"Key '{key}'  not found in the map: {ke1}")
-        return 0
-    try:
-        beta_complement_float = 1 - beta
-        print(f"beta_complement_float  '{beta_complement_float}'")
-        beta_complement = round(beta_complement_float,ndigits=2)
-        print(f"beta_complement  '{beta_complement}'")
-        key = str(beta_complement);
-        print(f"beta  '{beta_complement}'  key '{key}'")
-        zeta_beta = zeta_map_for_one_sided_beta[key]
-        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
-    except KeyError as ke2:
-        print(f"Key '{beta}' not found in the map: {ke2}")
-        return 0
-    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
-    print(f"dividen '{dividend}' ")
-    divisor =  (mu_1 - mu_0)**2
-    print(f"dividen '{divisor}' ")
-    return math.ceil(dividend/divisor)
-
-    print(f"not sure what happend")
-    return 0
-
-def isEmpty(input:str):
-    return len(input.strip()) == 0
-
-def calculate_critical_values(levels: list[float], half_level: bool = False) -> list[float]:
+def calculate_critical_values(levels: list[float], half_level: bool = False):
     """
     Calculates critical values from a list of significance levels using the inverse
     cumulative distribution function (quantile function) of the standard normal distribution.
@@ -383,36 +178,263 @@ def calculate_critical_values(levels: list[float], half_level: bool = False) -> 
                      the point on the standard normal distribution curve beyond which
                      the specified (or halved) probability lies in the upper tail.
     """
-    critical_values = []
+    critical_values_map = {}
     for level_val in levels:
         # If half_level is True, we divide the significance level by 2.
         # Otherwise, we use the level as is.
         effective_level = level_val / 2 if half_level else level_val
-
+        print(f"level_val: {level_val}", file=sys.stderr)
         # In R's qnorm(prob, lower.tail=F), 'prob' is the probability in the upper tail.
         # scipy.stats.norm.ppf(q) expects 'q' as the cumulative probability (P(X <= x)).
         # So, if 'effective_level' is the upper tail probability, the cumulative
         # probability 'q' is 1 - effective_level.
         cumulative_probability = 1 - effective_level
 
-        critical_values.append(norm.ppf(cumulative_probability))
-
-    return critical_values
+        #critical_values.append(norm.ppf(cumulative_probability))
+        critical_values_map[level_val] = norm.ppf(cumulative_probability)
+    return critical_values_map
+    #return critical_values
 
 # Define the list of significance levels
-# levels_data = [0.01, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
+levels_data = [0.01, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
 
 # print("--- Calculating Critical Values (One-Tailed, equivalent to R's qnorm(Level[i], lower.tail=F)) ---")
 #  Call the function for a one-tailed test (half_level=False)
-# critical_one_tail = calculate_critical_values(levels_data, half_level=False)
+critical_one_tail = calculate_critical_values(levels_data, half_level=False)
+for key, value in critical_one_tail.items():
+    print(f"1a  Key: {key}, Value: {value}", file=sys.stderr)
 # for i, level in enumerate(levels_data):
 #     print(f"Level: {level:.2f}, Critical Value: {critical_one_tail[i]:.4f}")
 
 # print("\n--- Calculating Critical Values (Two-Tailed, equivalent to R's qnorm((Level/2)[i], lower.tail=F)) ---")
 #  Call the function for a two-tailed test (half_level=True)
-# critical_two_tail = calculate_critical_values(levels_data, half_level=True)
+critical_two_tail = calculate_critical_values(levels_data, half_level=True)
+for key, value in critical_two_tail.items():
+    print(f"2a Key: {key}, Value: {value}", file=sys.stderr)
 # for i, level in enumerate(levels_data):
 #     print(f"Level: {level:.2f}, Critical Value: {critical_two_tail[i]:.4f}")
+
+
+def calculate(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int,test_type:int):
+    #print(f"inside calculate", file=sys.stderr)
+    critical_one_tail = calculate_critical_values(levels_data, half_level=False)
+    critical_two_tail = calculate_critical_values(levels_data, half_level=True)
+    for key, value in critical_one_tail.items():
+        print(f"1 Key: {key}, Value: {value}", file=sys.stderr)
+    for key, value in critical_two_tail.items():
+        print(f"2 Key: {key}, Value: {value}", file=sys.stderr)
+
+    if test_type == 1:
+        n = calc_test_one_sided(float(alpha),float(beta),int(sigma_sqr),
+        int(mu_0),int(mu_1), critical_one_tail)
+    elif test_type == 2:
+        n = calc_test_two_sided(float(alpha),float(beta),int(sigma_sqr),
+        int(mu_0),int(mu_1), critical_two_tail)
+    return render_template('result.html', alpha=alpha, beta=beta,
+      sigma_sqr=sigma_sqr,mu_0=mu_0,mu_1=mu_1,test_type=test_type,result=n, beta_complement=beta_complement_g)
+
+def calc_test_one_sided(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int,  critical_one_tail) -> int:
+    try:
+        key = str(alpha)
+        print(f"Key '{alpha}'  key '{key}'", file=sys.stderr)
+        #zeta_alpha = zeta_map_for_one_sided_alpha[key]
+        #zeta_alpha = critical_one_tail[key]
+        zeta_alpha = critical_one_tail[alpha]
+        print(f"Key '{alpha}'  found value '{zeta_alpha}'", file=sys.stderr)
+    except KeyError as ke1:
+        print(f"alpha Key '{key}'  not found in the map: {ke1}", file=sys.stderr)
+        return 0
+    # try:
+    #     beta_complement_float = 1 - beta
+    #     key = str(beta_complement_float)
+    #     print(f"Key '{alpha}'  key '{key}'")
+    #     #zeta_alpha = zeta_map_for_one_sided_alpha[key]
+    #     zeta_alpha = critical_one_tail[key]
+    #     print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    # except KeyError as ke1:
+    #     print(f"Key '{key}'  not found in the map: {ke1}")
+    #     return 0
+    try:
+        beta_complement_float = 1 - beta
+        print(f"beta_complement_float  '{beta_complement_float}'", file=sys.stderr)
+        beta_complement = round(beta_complement_float,ndigits=2)
+        print(f"beta_complement  '{beta_complement}'", file=sys.stderr)
+        beta_complement_g = beta_complement
+        print(f"beta_complement_g  '{beta_complement_g}'", file=sys.stderr)
+        key = str(beta_complement)
+        print(f"beta  '{beta_complement}'  key '{key}'", file=sys.stderr)
+        #zeta_beta = zeta_map_for_one_sided_beta[key]
+        #zeta_beta = critical_one_tail[key]
+        zeta_beta = critical_one_tail[beta_complement]
+        print(f"Key '{beta_complement}'  found value '{zeta_beta}'", file=sys.stderr)
+    except KeyError as ke2:
+        print(f"beta Key '{beta}' not found in the map: {ke2}", file=sys.stderr)
+        return 0
+    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    print(f"dividen '{dividend}' ")
+    divisor =  (mu_1 - mu_0)**2
+    print(f"divisor '{divisor}' ")
+    return math.ceil(dividend/divisor)
+
+    print(f"not sure what happend")
+    return 0
+
+
+    # try:
+    #     key = str(alpha)
+    #     print(f"Key '{alpha}'  key '{key}'")
+    #     zeta_alpha = zeta_map_for_one_sided_alpha[key]
+    #     print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    # except KeyError as ke1:
+    #     print(f"Key '{key}'  not found in the map: {ke1}")
+    #     return 0
+    # try:
+    #     beta_complement_float = 1 - beta
+    #     print(f"beta_complement_float  '{beta_complement_float}'")
+    #     beta_complement = round(beta_complement_float,ndigits=2)
+    #     print(f"beta_complement  '{beta_complement}'")
+    #     key = str(beta_complement)
+    #     print(f"beta  '{beta_complement}'  key '{key}'")
+    #     zeta_beta = zeta_map_for_one_sided_beta[key]
+    #     print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
+    # except KeyError as ke2:
+    #     print(f"Key '{beta}' not found in the map: {ke2}")
+    #     return 0
+    # dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    # print(f"dividen '{dividend}' ")
+    # divisor =  (mu_1 - mu_0)**2
+    # print(f"divisor '{divisor}' ")
+    # return math.ceil(dividend/divisor)
+
+    print(f"not sure what happend")
+    return 0
+
+
+    try:
+        #key = str(alpha)
+        print(f"Key '{alpha}'  key '{key}'")
+        #zeta_alpha = zeta_map_for_one_sided_alpha[key]
+        zeta_alpha = zeta_map_for_one_sided_alpha[alpha]
+        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    except KeyError as ke1:
+        print(f"Key '{key}'  not found in the map: {ke1}")
+        return 0
+    try:
+        beta_complement_float = 1 - beta
+        print(f"beta_complement_float  '{beta_complement_float}'")
+        beta_complement = round(beta_complement_float,ndigits=2)
+        print(f"beta_complement  '{beta_complement}'")
+        key = str(beta_complement)
+        print(f"beta  '{beta_complement}'  key '{key}'")
+        zeta_beta = zeta_map_for_one_sided_beta[key]
+        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
+    except KeyError as ke2:
+        print(f"Key '{beta}' not found in the map: {ke2}")
+        return 0
+    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    print(f"dividen '{dividend}' ")
+    divisor =  (mu_1 - mu_0)**2
+    print(f"dividen '{divisor}' ")
+    return math.ceil(dividend/divisor)
+
+    print(f"not sure what happend")
+    return 0
+
+def calc_test_two_sided(alpha:float,beta:float,sigma_sqr:int,mu_0:int,mu_1:int, critical_two_tail) -> int:
+
+    try:
+        key = str(alpha)
+        print(f"Key '{alpha}'  key '{key}'")
+        #zeta_alpha = zeta_map_for_two_sided_alpha[key]
+        zeta_alpha = critical_two_tail[key]
+        print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    except KeyError as ke1:
+        print(f"Key '{key}'  not found in the map: {ke1}")
+        return 0
+    try:
+        beta_complement_float = 1 - beta
+        print(f"beta_complement_float  '{beta_complement_float}'")
+        beta_complement = round(beta_complement_float,ndigits=2)
+        print(f"beta_complement  '{beta_complement}'")
+        key = str(beta_complement)
+        print(f"beta  '{beta_complement}'  key '{key}'")
+        #zeta_beta = zeta_map_for_two_sided_beta[key]
+        zeta_beta = critical_two_tail[key]
+        print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
+    except KeyError as ke2:
+        print(f"Key '{beta}' not found in the map: {ke2}")
+        return 0
+    dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    print(f"dividen '{dividend}' ")
+    divisor =  (mu_1 - mu_0)**2
+    print(f"dividen '{divisor}' ")
+    return math.ceil(dividend/divisor)
+
+    print(f"not sure what happend")
+    return 0
+
+
+    # try:
+    #     key = str(alpha)
+    #     print(f"Key '{alpha}'  key '{key}'")
+    #     zeta_alpha = zeta_map_for_one_sided_alpha[key]
+    #     print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    # except KeyError as ke1:
+    #     print(f"Key '{key}'  not found in the map: {ke1}")
+    #     return 0
+    # try:
+    #     beta_complement_float = 1 - beta
+    #     print(f"beta_complement_float  '{beta_complement_float}'")
+    #     beta_complement = round(beta_complement_float,ndigits=2)
+    #     print(f"beta_complement  '{beta_complement}'")
+    #     key = str(beta_complement)
+    #     print(f"beta  '{beta_complement}'  key '{key}'")
+    #     zeta_beta = zeta_map_for_one_sided_beta[key]
+    #     print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
+    # except KeyError as ke2:
+    #     print(f"Key '{beta}' not found in the map: {ke2}")
+    # dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    # print(f"dividen '{dividend}' ")
+    # divisor =  (mu_1 - mu_0)**2
+    # print(f"dividen '{divisor}' ")
+    # return math.ceil(dividend/divisor)
+
+    # print(f"not sure what happend")
+    # return 0
+
+
+    # try:
+    #     key = str(alpha)
+    #     print(f"Key '{alpha}'  key '{key}'")
+    #     zeta_alpha = zeta_map_for_one_sided_alpha[key]
+    #     print(f"Key '{alpha}'  found value '{zeta_alpha}'")
+    # except KeyError as ke1:
+    #     print(f"Key '{key}'  not found in the map: {ke1}")
+    #     return 0
+    # try:
+    #     beta_complement_float = 1 - beta
+    #     print(f"beta_complement_float  '{beta_complement_float}'")
+    #     beta_complement = round(beta_complement_float,ndigits=2)
+    #     print(f"beta_complement  '{beta_complement}'")
+    #     key = str(beta_complement)
+    #     print(f"beta  '{beta_complement}'  key '{key}'")
+    #     zeta_beta = zeta_map_for_one_sided_beta[key]
+    #     print(f"Key '{beta_complement}'  found value '{zeta_beta}'")
+    # except KeyError as ke2:
+    #     print(f"Key '{beta}' not found in the map: {ke2}")
+    #     return 0
+    # dividend = sigma_sqr*(zeta_alpha+zeta_beta)**2
+    # print(f"dividen '{dividend}' ")
+    # divisor =  (mu_1 - mu_0)**2
+    # print(f"dividen '{divisor}' ")
+    # return math.ceil(dividend/divisor)
+
+    # print(f"not sure what happend")
+    # return 0
+
+def isEmpty(input:str):
+    return len(input.strip()) == 0
+
 
 # --- Run the app ---
 if __name__ == '__main__':
