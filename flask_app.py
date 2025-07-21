@@ -1,15 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from dotenv import load_dotenv, dotenv_values
+#from dotenv import load_dotenv, dotenv_values
 import os
 import sys
 import math
 import numpy as np
 from scipy.stats import norm
+from datetime import timedelta
 
 app = Flask(__name__)
-#load_dotenv()
+#load_dotenv(dotenv_path='/home/redsword/mysite')
+#sec =  os.getenv('SECRET_KEY')
+#str = f"sec={sec}"
+
 # app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 # sec = app.config['SECRET_KEY']
 # str = f"sec={sec}"
@@ -46,6 +50,7 @@ zeta_map_for_two_sided_beta = { "0.01":2.3263479,"0.05":1.6448536,"0.1":1.281551
 
 beta_complement_g = 0.0
 
+
 # --- Database Model ---
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,8 +78,8 @@ class User(db.Model):
 @app.route('/')
 def index():
     if 'username' in session:
-#        return render_template('index.html', username=session['username'])
-         return render_template('inputdata.html', username=session['username'])
+        #print(str, file=sys.stderr)
+        return render_template('inputdata.html', username=session['username'])
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -104,6 +109,8 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'username' in session:
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=5)
         return render_template('inputdata.html')
     if request.method == 'POST':
         username = request.form['username']
@@ -412,5 +419,5 @@ if __name__ == '__main__':
     # Create tables if they don't exist
     with app.app_context():
         db.create_all()
-    print(str, file=sys.stderr)
+    print(str,file=sys.stderr)
     app.run(debug=True) # debug=True for development, set to False for production

@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">Home</a>
+        <!--<a href="{{ url_for('index') }}">Home</a> -->
         {% if 'username' in session %}
             <a href="{{ url_for('logout') }}">Logout</a>
         {% else %}
@@ -30,6 +30,12 @@
             </ul>
         {% endif %}
     {% endwith %}
-    {% block content %}{% endblock %}
+    {% block content %}
+        {% if 'username' in session %}
+           <h1>Hello {{ username }}</h1>
+        {% else %}
+            <h3>Welcome to SparSoft. Please <a href="{{ url_for('login') }}">Login</a></h3>
+        {% endif %}
+    {% endblock %}
 </body>
 </html>

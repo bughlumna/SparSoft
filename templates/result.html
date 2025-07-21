@@ -1,28 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
- <p>Result: {{ result }}</p>
-{% endblock %}
-
-<!-- templates/result.html -->
-
-<!-- <!DOCTYPE html>
-<html>
-
-<style>
-table, th, td {
-  border: 3px solid black;
-}
-</style>
 <script>
     console.log("beta_complement ",beta_complement)
 </script>
+{% block content %}
 
-<head>
-    <title>Result</title>
-</head>
 
-<body>
+
     <p>Alpha: {{ alpha }}</p>
     <p>1-Beta: {{ beta }}</p>
     <p>Beta: {{beta_complement}}</p>
@@ -33,6 +17,11 @@ table, th, td {
     <p></p>
     <p>Result: {{ result }}</p>
 
+<style>
+table, th, td {
+  border: 3px solid black;
+}
+</style>
 <table>
     <tr>
       <th>Alpha          </th>
@@ -56,5 +45,4 @@ table, th, td {
   </tr>
 
 </table>
-</body>
-</html>-->
+{% endblock %}
